@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Vehicle Tracking System</title>
+
+    <!-- Dashboard CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Leaflet Map CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <h1>Smart Vehicle Tracking System</h1>
+        <p>Real-Time Fleet Management Dashboard</p>
+    </header>
+
+    <main class="dashboard">
+
+        <!-- Summary Cards -->
+        <section class="cards">
+
+            <div class="card">
+                <h3>Total Vehicles</h3>
+                <p id="totalVehicles">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Active Vehicles</h3>
+                <p id="activeVehicles">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Offline Vehicles</h3>
+                <p id="offlineVehicles">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Alerts</h3>
+                <p id="alertCount">0</p>
+            </div>
+
+        </section>
+
+        <!-- Live Map -->
+        <section class="map-section">
+            <h2>Live Vehicle Location</h2>
+
+            <div id="map"></div>
+        </section>
+
+        <!-- Vehicle Information -->
+        <section class="vehicle-section">
+            <h2>Vehicle Information</h2>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Vehicle</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>Speed</th>
+                            <th>Ignition</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="vehicleTableBody">
+                        <tr>
+                            <td colspan="6">
+                                No vehicle data available
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Leaflet Map JavaScript -->
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+    <!-- Dashboard JavaScript -->
+    <script src="app.js"></script>
+
+</body>
+</html>

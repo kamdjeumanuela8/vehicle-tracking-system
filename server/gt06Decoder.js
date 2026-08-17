@@ -25,10 +25,10 @@ function decodeGPSData(data) {
         latitude,
         longitude,
         speed,
+        ignition,
         timestamp: new Date()
     };
 }
 
 module.exports = decodeGPSData;
 
-/*IN this part of the code we are  creating a gps decoder*/
