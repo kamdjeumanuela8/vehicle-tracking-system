@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Smart Vehicle Tracking System</title>
+    
 
     <!-- Dashboard CSS -->
     <link rel="stylesheet" href="style.css">
@@ -14,14 +15,48 @@
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     />
+
+    <!-- Dashboard Authentication Guard -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import {
+            getAuth,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBpN2g6cZnGKnhTJrQ_N3sfWrG8M141BQ0",
+            authDomain: "vehicle-tracking-system-286dc.firebaseapp.com",
+            databaseURL: "https://vehicle-tracking-system-286dc-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "vehicle-tracking-system-286dc",
+            storageBucket: "vehicle-tracking-system-286dc.firebasestorage.app",
+            messagingSenderId: "370639255839",
+            appId: "1:370639255839:web:a93ce5db7b4fda41b6982a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.replace("login.html");
+            }
+        });
+    </script>
 </head>
 
 <body>
 
     <!-- Header -->
     <header class="header">
-        <h1>Smart Vehicle Tracking System</h1>
-        <p>Real-Time Fleet Management Dashboard</p>
+        <div class="header-content">
+            <div>
+                <h1>Smart Vehicle Tracking System</h1>
+                <p>Real-Time Fleet Management Dashboard</p>
+            </div>
+
+            <a href="logout.html" class="logout-button">Logout</a>
+        </div>
     </header>
 
     <main class="dashboard">
@@ -95,6 +130,5 @@
 
     <!-- Dashboard JavaScript -->
     <script src="app.js"></script>
-
 </body>
 </html>

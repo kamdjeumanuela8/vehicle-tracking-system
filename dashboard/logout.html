@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logging Out - Vehicle Tracking System</title>
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f4f7fb;
+            font-family: Arial, sans-serif;
+        }
+
+        .logout-box {
+            background: white;
+            width: 360px;
+            padding: 35px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .logout-box h2 {
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .logout-box p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .status {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="logout-box">
+        <h2>Vehicle Tracking System</h2>
+        <p id="message">Signing you out...</p>
+        <div class="status" id="status"></div>
+    </div>
+
+    <script type="module">
+
+        import { initializeApp } 
+            from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+        import { 
+            getAuth, 
+            signOut 
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBpN2g6cZnGKnhTJrQ_N3sfWrG8M141BQ0",
+            authDomain: "vehicle-tracking-system-286dc.firebaseapp.com",
+            databaseURL: "https://vehicle-tracking-system-286dc-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "vehicle-tracking-system-286dc",
+            storageBucket: "vehicle-tracking-system-286dc.firebasestorage.app",
+            messagingSenderId: "370639255839",
+            appId: "1:370639255839:web:a93ce5db7b4fda41b6982a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const message = document.getElementById("message");
+        const status = document.getElementById("status");
+
+        signOut(auth)
+            .then(() => {
+                message.textContent = "You have been successfully logged out.";
+                status.textContent = "Redirecting to login...";
+
+                setTimeout(() => {
+                    window.location.href = "login.html";
+                }, 1000);
+            })
+            .catch((error) => {
+                console.error("Logout error:", error);
+
+                message.textContent = "Unable to log out.";
+                status.textContent = "Please try again.";
+            });
+
+    </script>
+
+</body>
+</html>
