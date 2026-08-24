@@ -59,18 +59,39 @@ function initializeMap() {
 
 async function loadVehicleData() {
     try {
-        const response = await fetch(firebaseDatabaseUrl, { cache: "no-store" });
+        // Try Firebase first, but don't hang forever — use a 5s timeout and fallback
+        const controller = new AbortController();
+        let timeoutId = null;
 
-        if (!response.ok) {
-            throw new Error(`Firebase request failed with status ${response.status}`);
+        try {
+            timeoutId = setTimeout(() => controller.abort(), 5000);
+
+            const response = await fetch(firebaseDatabaseUrl, { cache: "no-store", signal: controller.signal });
+
+            clearTimeout(timeoutId);
+
+            if (!response.ok) {
+                throw new Error(`Firebase request failed with status ${response.status}`);
+            }
+
+            const rawData = await response.json();
+            console.log("DASHBOARD: using Firebase data");
+            const vehicles = normalizeVehicles(rawData);
+            renderDashboard(vehicles);
+            return;
+        } finally {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+        }
+    } catch (error) {
+        if (error.name === 'AbortError') {
+            console.warn('DASHBOARD: Firebase request timed out (using fallback)');
+        } else {
+            console.warn("DASHBOARD: Firebase request failed, using fallback:", error.message);
         }
 
-        const rawData = await response.json();
-        const vehicles = normalizeVehicles(rawData);
-        renderDashboard(vehicles);
-        return;
-    } catch (error) {
-        console.warn("Using fallback dashboard data:", error.message);
+        console.log("DASHBOARD: using fallback data");
         renderDashboard(normalizeVehicles(fallbackVehicles));
     }
 }
